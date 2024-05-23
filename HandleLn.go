@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func HandleLn(s string, b [][]string) {
+func HandleLn(s string, b [][]string, output *os.File) {
 	if s == "" {
 		fmt.Print()
 		return
@@ -23,33 +23,18 @@ func HandleLn(s string, b [][]string) {
 	if isAllNewline {
 		count := strings.Count(s, "\n")
 		for i := 0; i < count; i++ {
-			fmt.Println()
+			output.Write([]byte("\n"))
 		}
 		return
-	}
-
-	//Creating the output file that will be passed to the Printer function
-	outputFile, err := os.Create("banner.txt")
-	if err != nil {
-		fmt.Println("Error creating output file:", err)
-		return
-	}
-	defer outputFile.Close()
-
-	err = Printer(s, b, outputFile)
-	if err != nil {
-		fmt.Println("Error writing to file:", err)
-	} else {
-		fmt.Println("Successfully wrote to banner.txt")
 	}
 
 	// logic for processing lines
 	str := strings.Split(s, "\n")
 	for _, char := range str {
 		if char == "" {
-			fmt.Println()
+			output.Write([]byte("\n"))
 			continue
 		}
-		Printer(char, b, outputFile)
+		Printer(char, b, output)
 	}
 }

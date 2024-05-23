@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -10,23 +11,47 @@ import (
 )
 
 func main() {
-	// Open the file
-	file, err := os.Open("shadow.txt")
+	// create an ouput flag
+	out := flag.String("output", "banner.txt", "this is the ouput file")
+	flag.Parse()
 
-	if len(os.Args) == 4 {
-		bannerName := os.Args[3] + ".txt"
-		file, err = os.Open(bannerName)
-		if err != nil {
-			fmt.Println(err, ". Please specify a valid banner file.")
-			return
-		}
-	}
-
+	outputfile, err := os.Create(*out) //create the file to write program's output
 	if err != nil {
-		fmt.Println("Error opening file:", err)
+		fmt.Println("Unable to create file banner.txt!")
+		os.Exit(0)
+	}
+	var input string
+	var file *os.File
+
+	// Check command-line arguments
+	switch len(os.Args) {
+	case 2, 4:
+		// Valid cases, do nothing
+	default:
+		fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] or \nUsage: go run . [STRING]")
 		return
 	}
-	defer file.Close()
+
+	if len(os.Args) == 4 {
+		input = flag.Args()[0]
+		file, err = os.Open(flag.Args()[1] + ".txt")
+		if err != nil {
+			fmt.Println("Error opening file:", err)
+			return
+		}
+		defer file.Close()
+
+	}
+	if len(os.Args) == 2 {
+		input = os.Args[1]
+		file, err = os.Open("standard.txt")
+		if err != nil {
+			fmt.Println("Error opening file:", err)
+			return
+		}
+		defer file.Close()
+
+	}
 
 	// Read lines from the file
 	scanner := bufio.NewScanner(file)
@@ -40,29 +65,7 @@ func main() {
 		return
 	}
 
-	// Split lines into characters
-	characters := [][]string{}
-	for i := 0; i < len(lines); i += 9 {
-		end := i + 9
-		if end > len(lines) {
-			end = len(lines)
-		}
-		characters = append(characters, lines[i:end])
-	}
-
-	// Check command-line arguments
-	if len(os.Args) < 2 || len(os.Args) > 4 {
-		fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
-		return
-	}
-
-	// Check for non-printable characters in the input string
-	input := os.Args[1]
-
-	if len(os.Args) == 4 {
-		input = os.Args[2]
-	}
-
+	// check for non-printable characters
 	for i := 0; i < len(input); i++ {
 		if (input[i] < 32 || input[i] > 126) && input[i] != 10 {
 			fmt.Println("Cannot print one or more characters")
@@ -74,6 +77,17 @@ func main() {
 	input = strings.Replace(input, "\\n", "\n", -1)
 	input = strings.Replace(input, "\\t", "    ", -1)
 
+	// Split lines into characters of 8 lines
+	characters := [][]string{}
+	for i := 1; i < len(lines); i += 9 {
+		end := i + 9
+		if end > len(lines) {
+			end = len(lines)
+		}
+		characters = append(characters, lines[i:end])
+	}
+
 	// Generate ASCII art
-	asciiart.HandleLn(input, characters)
+	asciiart.HandleLn(input, characters, outputfile)
+	fmt.Println("Art created in banner.txt successfully!")
 }

@@ -1,44 +1,67 @@
-# ASCII Art Printer
+#ASCII Art Banner Generator
 
-This Go program prints ASCII characters based on a provided file containing ASCII patterns. The file standard.txt should contain ASCII patterns for characters from space " " to tilde "~". The program takes two arguments to run:
+This program creates ASCII art banners from a provided string and an optional input file containing character sets.
 
-    The name of the file containing the main function (art)
-    A string as input
+##Features
 
-Example command:
+    Accepts a string as input for the banner text.
+    Supports loading character sets from a text file for improved control over the banner's appearance.
+    Generates ASCII art banners in the specified output file (default: banner.txt).
+    Validates input string to ensure it contains only printable characters (except newline \n).
+    Handles basic formatting for newline (\n) and tab (\t) characters within the input string.
 
-bash
+##Installation
 
-go run main.go "Hello" | cat -e
+    Make sure you have Go installed (https://go.dev/doc/install).
+    Clone or download this repository.
+    Navigate to the project directory then into the directory containing the main.go file /art in your terminal.
 
-How to Use
+##Usage
 
-    Ensure you have Go installed on your system.
-    Place your ASCII art patterns in a file named standard.txt.
-    Navigate to the folder, art, containing main.go
-    Run the program with the main file name and a string input.
+There are two ways to use the program:
 
-Code Explanation
+###1. With a String Input Only
 
-The program consists of the following main functions:
-main()
+`go run . "YOUR_STRING"`
 
-    Reads the contents of standard.txt into memory.
-    Converts the input string argument to the desired format.
-    Handles line breaks and prints the corresponding ASCII art.
+This will create an ASCII art banner for the provided string and use the default character set from the built-in standard.txt file. The banner will be saved in banner.txt.
 
-HandleLn(s string, b [][]string)
+###2. With a String Input and an Optional Character Set File
 
-    Handles newline characters in the input string.
-    Prints ASCII art for each character in the input string.
+`go run . -output OUTPUT_FILE_NAME STRING CHARACTER_SET_FILE.txt`
 
-Printer(s string, b [][]string)
+    Replace OUTPUT_FILE_NAME with the desired name for the output file (default: banner.txt).
+    STRING is the text you want to convert into ASCII art.
+    CHARACTER_SET_FILE.txt is the path to the text file containing your custom character set. This file should have one character per line.
 
-    Prints the ASCII art for each character in the input string.
+##Character Set File Format
 
-Usage Notes
+Each line in the character set file represents a single character that can be used in the banner. The first 8 lines define the top row of characters, the next 8 lines define the second row, and so on, creating a grid of characters. You can customize these characters to create unique banner styles.
 
-    Ensure the standard.txt file contains ASCII patterns for characters from space " " to tilde "~".
-    The program may not handle characters outside this range gracefully and will print an error message if encountered.
+Example Character Set File (standard.txt):
 
-Feel free to enhance the program to handle a wider range of characters or improve error handling as needed.
+ _              _   _          
+| |            | | | |         
+| |__     ___  | | | |   ___   
+|  _ \   / _ \ | | | |  / _ \  
+| | | | |  __/ | | | | | (_) | 
+|_| |_|  \___| |_| |_|  \___/  
+                               
+                               
+
+
+
+##Limitations
+
+    The program currently assumes the character set file is 8 characters wide and has 855 lines (8 x 107 characters). Modifying this layout might cause unexpected results.
+    The program only accepts printable characters (except newline and tab) for the input string.
+
+##Future Improvements
+
+    Support additional formatting options for the input string.
+
+Author
+
+Rodney Otieno
+
+I hope this README provides a clear and informative guide for using your ASCII art banner generator!
