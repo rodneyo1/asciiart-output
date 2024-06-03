@@ -1,10 +1,10 @@
 package main
 
 import (
+	"asciiart"
 	"os"
 	"strings"
 	"testing"
-	"io/ioutil"
 )
 
 type TestCase struct {
@@ -52,16 +52,16 @@ o  o o-o o o o-o
 	// Add more test cases as needed
 }
 
-func TestMainFunction(t *testing.T) {
+func TestGenerateArt(t *testing.T) {
 	for _, testCase := range testCases {
-		// Set command line arguments
-		os.Args = []string{"program_name", testCase.input, testCase.bannerFile}
-
-		// Run the main function
-		main()
+		outputFile := "test_banner.txt"
+		err := asciiart.GenerateArt(testCase.input, testCase.bannerFile, outputFile)
+		if err != nil {
+			t.Fatalf("generateArt failed: %v", err)
+		}
 
 		// Read the output from the file
-		output, err := ioutil.ReadFile("banner.txt")
+		output, err := os.ReadFile(outputFile)
 		if err != nil {
 			t.Fatalf("Failed to read output file: %v", err)
 		}
@@ -74,7 +74,7 @@ func TestMainFunction(t *testing.T) {
 		}
 
 		// Clean up the output file
-		err = os.Remove("banner.txt")
+		err = os.Remove(outputFile)
 		if err != nil {
 			t.Fatalf("Failed to delete output file: %v", err)
 		}
