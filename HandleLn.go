@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func HandleLn(s string, b [][]string, output *os.File) {
+func HandleLn(s string, b [][]string, outputfile *os.File) {
 	if s == "" {
 		fmt.Print()
 		return
@@ -19,22 +19,41 @@ func HandleLn(s string, b [][]string, output *os.File) {
 			break
 		}
 	}
-
-	if isAllNewline {
-		count := strings.Count(s, "\n")
-		for i := 0; i < count; i++ {
-			output.Write([]byte("\n"))
+	if outputfile == nil {
+		if isAllNewline {
+			count := strings.Count(s, "\n")
+			for i := 0; i < count; i++ {
+				fmt.Println()
+			}
+			return
 		}
-		return
-	}
 
-	// logic for processing lines
-	str := strings.Split(s, "\n")
-	for _, char := range str {
-		if char == "" {
-			output.Write([]byte("\n"))
-			continue
+		// logic for processing lines
+		str := strings.Split(s, "\n")
+		for _, char := range str {
+			if char == "" {
+				fmt.Println()
+				continue
+			}
+			Printer(char, b, outputfile)
 		}
-		Printer(char, b, output)
+	} else {
+		if isAllNewline {
+			count := strings.Count(s, "\n")
+			for i := 0; i < count; i++ {
+				outputfile.Write([]byte("\n"))
+			}
+			return
+		}
+
+		// logic for processing lines
+		str := strings.Split(s, "\n")
+		for _, char := range str {
+			if char == "" {
+				outputfile.Write([]byte("\n"))
+				continue
+			}
+			Printer(char, b, outputfile)
+		}
 	}
 }

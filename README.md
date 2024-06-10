@@ -1,14 +1,4 @@
-# ASCII Art Banner Generator
-
-```
-                         _    _          _   _          
-                        | |  | |        | | | |         
-                        | |__| |   ___  | | | |   ___   
-                        |  __  |  / _ \ | | | |  / _ \  
-                        | |  | | |  __/ | | | | | (_) | 
-                        |_|  |_|  \___| |_| |_|  \___/  
-                                                                                                       
-```
+ASCII Art Banner Generator
 
 This program creates ASCII art banners from a provided string and an optional input file containing character sets.
 
@@ -22,16 +12,15 @@ Features
 
 Installation
 
-Make sure you have Go installed https://go.dev/doc/install.
-Clone or download this repository.
-Navigate to the project directory then into the directory containing the main.go file /art in your terminal.
+    Make sure you have Go installed (https://go.dev/doc/install).
+    Clone or download this repository.
+    Navigate to the project directory then into the directory containing the main.go file /art in your terminal.
 
-### Usage
+Usage
 
-There are two ways to use the program.:
+There are two ways to use the program:
 
 1. With a String Input Only
-Navigate to the directory `/art` containing the main.go file
 
 `go run . "YOUR_STRING"`
 
@@ -41,22 +30,25 @@ This will create an ASCII art banner for the provided string and use the default
 
 `go run . -output OUTPUT_FILE_NAME STRING CHARACTER_SET_FILE.txt`
 
- Replace OUTPUT_FILE_NAME with the desired name for the output file (default: banner.txt).
-STRING is the text you want to convert into ASCII art.
-CHARACTER_SET_FILE.txt is the path to the text file containing your custom character set. This file should have one character per line.
+    Replace OUTPUT_FILE_NAME with the desired name for the output file (default: banner.txt).
+    STRING is the text you want to convert into ASCII art.
+    CHARACTER_SET_FILE.txt is the path to the text file containing your custom character set. This file should have one character per line.
 
+Character Set File Format
 
-### Limitations
+Each line in the character set file represents a single character that can be used in the banner. The first 8 lines define the top row of characters, the next 8 lines define the second row, and so on, creating a grid of characters. You can customize these characters to create unique banner styles.
 
-The program currently assumes the character set file is 8 characters wide and has 855 lines (8 x 107 characters). Modifying this layout might cause unexpected results.
-The program only accepts printable characters (except newline and tab) for the input string.
+Limitations
 
-### Future Improvements
+    The program currently assumes the character set file is 8 characters wide and has 855 lines (8 x 107 characters). Modifying this layout might cause unexpected results.
+    The program only accepts printable characters (except newline and tab) for the input string.
 
-Support additional formatting options for the input string.
+Future Improvements
+
+    Support additional formatting options for the input string.
 
 Author
 
-Rodney Otieno 
+Rodney Otieno
 
 I hope this README provides a clear and informative guide for using your ASCII art banner generator!
