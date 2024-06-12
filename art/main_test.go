@@ -7,16 +7,26 @@ import (
 )
 
 func TestMainFunction(t *testing.T) {
-	os.Args = []string{"program_name", "hello"}
+	os.Args = []string{"program_name", "hello\\tThere12\n3"}
 
-	expectedOutput := ` _              _   _          
-| |            | | | |         
-| |__     ___  | | | |   ___   
-|  _ \   / _ \ | | | |  / _ \  
-| | | | |  __/ | | | | | (_) | 
-|_| |_|  \___| |_| |_|  \___/  
-                               
-                               `
+	expectedOutput := ` _              _   _                                   _______   _                                       
+| |            | | | |                                 |__   __| | |                           _   ____   
+| |__     ___  | | | |   ___                              | |    | |__     ___   _ __    ___  / | |___ \  
+|  _ \   / _ \ | | | |  / _ \                             | |    |  _ \   / _ \ | '__|  / _ \ | |   __) | 
+| | | | |  __/ | | | | | (_) |                            | |    | | | | |  __/ | |    |  __/ | |  / __/  
+|_| |_|  \___| |_| |_|  \___/                             |_|    |_| |_|  \___| |_|     \___| |_| |_____| 
+                                                                                                          
+                                                                                                          
+
+        
+ _____  
+|___ /  
+  |_ \  
+ ___) | 
+|____/  
+        
+        
+`
 
 	// Redirect stdout to capture output
 	old := os.Stdout

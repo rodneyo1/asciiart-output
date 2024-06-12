@@ -1,54 +1,74 @@
-ASCII Art Banner Generator
+# ASCII Art Output Generator
 
-This program creates ASCII art banners from a provided string and an optional input file containing character sets.
+This is a simple command-line program that generates ASCII art from a given string using a specified banner. The program supports three different banners: `standard`, `shadow`, and `thinkertoy`. Additionally, the output can be saved to a file.
+```
+                         _    _          _   _          
+                        | |  | |        | | | |         
+                        | |__| |   ___  | | | |   ___   
+                        |  __  |  / _ \ | | | |  / _ \  
+                        | |  | | |  __/ | | | | | (_) | 
+                        |_|  |_|  \___| |_| |_|  \___/  
+                                                        
+                                                        
+```
 
-Features
+## Installation
 
-    Accepts a string as input for the banner text.
-    Supports loading character sets from a text file for improved control over the banner's appearance.
-    Generates ASCII art banners in the specified output file (default: banner.txt).
-    Validates input string to ensure it contains only printable characters (except newline \n).
-    Handles basic formatting for newline (\n) and tab (\t) characters within the input string.
+1. Make sure you have Go installed on your machine. You can download and install Go from [here](https://golang.org/dl/).
 
-Installation
+2. Clone this repository or download the source code files.
 
-    Make sure you have Go installed (https://go.dev/doc/install).
-    Clone or download this repository.
-    Navigate to the project directory then into the directory containing the main.go file /art in your terminal.
+3. Navigate to the project directory.
 
-Usage
+## Usage
 
-There are two ways to use the program:
+### Build the Program
 
-1. With a String Input Only
+Before running the program, you need to build it. Use the following command to build the executable:
 
-`go run . "YOUR_STRING"`
+```sh
+go build -o ascii-art-generator
+```
 
-This will create an ASCII art banner for the provided string and use the default character set from the built-in standard.txt file. The banner will be saved in banner.txt.
+This will create an executable file named `ascii-art-generator` in the project directory.
 
-2. With a String Input and an Optional Character Set File
+### Run the Program
 
-`go run . -output OUTPUT_FILE_NAME STRING CHARACTER_SET_FILE.txt`
+To run the program, use the following command:
 
-    Replace OUTPUT_FILE_NAME with the desired name for the output file (default: banner.txt).
-    STRING is the text you want to convert into ASCII art.
-    CHARACTER_SET_FILE.txt is the path to the text file containing your custom character set. This file should have one character per line.
+```sh
+./ascii-art-generator [OPTION] [STRING] [BANNER]
+```
 
-Character Set File Format
+### Examples
 
-Each line in the character set file represents a single character that can be used in the banner. The first 8 lines define the top row of characters, the next 8 lines define the second row, and so on, creating a grid of characters. You can customize these characters to create unique banner styles.
+1. Generate ASCII art and print it to the console:
 
-Limitations
+    ```sh
+    ./ascii-art-generator "Hello, World!" standard
+    ```
 
-    The program currently assumes the character set file is 8 characters wide and has 855 lines (8 x 107 characters). Modifying this layout might cause unexpected results.
-    The program only accepts printable characters (except newline and tab) for the input string.
+2. Generate ASCII art and save it to a file:
 
-Future Improvements
+    ```sh
+    ./ascii-art-generator --output=output.txt "Hello, World!" standard
+    ```
 
-    Support additional formatting options for the input string.
+3. Use a different banner:
 
-Author
+    ```sh
+    ./ascii-art-generator "Hello, World!" shadow
+    ./ascii-art-generator "Hello, World!" thinkertoy
+    ```
 
-Rodney Otieno
+### Options
 
-I hope this README provides a clear and informative guide for using your ASCII art banner generator!
+- `--output=<fileName.txt>`: Specify the output file where the ASCII art will be saved.
+
+## Banner Files
+
+The program relies on banner files (`standard.txt`, `shadow.txt`, `thinkertoy.txt`) to generate the ASCII art. Make sure these files are in the same directory as the executable.
+
+## License
+
+This project is licensed under the Apache License.
